@@ -1,9 +1,13 @@
 import React from 'react';
+
 import { View, Text, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import { styles } from '../theme/appTheme';
+import { useGetPokemons } from '../hooks/useGetPokemons';
 
 export const HomeScreen = () => {
+  useGetPokemons();
   const { top } = useSafeAreaInsets();
   return (
     <View>
