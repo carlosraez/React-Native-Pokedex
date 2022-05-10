@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -19,17 +19,23 @@ interface Props {
 
 export const PokemonCard = ({ pokemon }: Props) => {
   const [bgColor, setBgColor] = useState('grey');
+  const isMounted = useRef(true);
 
   useEffect(() => {
     //IOS: Background
     //Android: Dominant
     ImageColors.getColors(pokemon.picture, { fallback: 'grey' }).then(
       colors => {
+        if (!isMounted.current) {
+          return;
+        }
+
         colors.platform === 'android'
           ? setBgColor(colors.dominant || 'grey')
           : setBgColor(colors.background || 'grey');
       },
     );
+    return () => (isMounted.current = false);
   }, []);
 
   return (
