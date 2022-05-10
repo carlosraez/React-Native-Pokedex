@@ -42,6 +42,8 @@ export const useGetPokemons = () => {
   }, []);
 
   return {
+    isLoading,
     simplePokemonList,
+    loadPokemons,
   };
 };
