@@ -15,6 +15,7 @@ import { RootStackParams } from '../navigator/navigator';
 import { FadeInImage } from '../components/FadeInImage';
 import { usePokemon } from '../hooks/usePokemon';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { PokemonDetail } from '../components/PokemonDetail';
 
 interface Props extends StackScreenProps<RootStackParams, 'PokemonScreen'> {}
 
@@ -49,9 +50,12 @@ export const PokemonScreen = ({ navigation, route }: Props) => {
         />
         <FadeInImage uri={picture} style={{ ...styles.pokemonImage }} />
       </View>
-      <View style={{ ...styles.loadingIndicator }}>
-        <ActivityIndicator color={color} size={60} />
-      </View>
+      {isLoading && (
+        <View style={{ ...styles.loadingIndicator }}>
+          <ActivityIndicator color={color} size={60} />
+        </View>
+      )}
+      <PokemonDetail pokemon={pokemon} />
     </View>
   );
 };
