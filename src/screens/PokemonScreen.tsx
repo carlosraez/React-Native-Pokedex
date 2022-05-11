@@ -1,13 +1,17 @@
-import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, NavigatorIOS } from 'react-native';
-import { RootStackParams } from '../navigator/navigator';
+import { View, StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { StackScreenProps } from '@react-navigation/stack';
+
+import { RootStackParams } from '../navigator/navigator';
+import { FadeInImage } from '../components/FadeInImage';
 
 interface Props extends StackScreenProps<RootStackParams, 'PokemonScreen'> {}
 
 export const PokemonScreen = ({ navigation, route }: Props) => {
   const { simplePokemon, color } = route.params;
+  const { name, id, picture } = simplePokemon;
   const { top } = useSafeAreaInsets();
 
   return (
@@ -19,12 +23,20 @@ export const PokemonScreen = ({ navigation, route }: Props) => {
         }}>
         <TouchableOpacity
           onPress={() => {
-            navigation.canGoBack();
+            navigation.pop();
           }}
           activeOpacity={0.8}
           style={{ ...styles.backbutton, top: top + 10 }}>
           <Icon name="arrow-back-outline" color="white" size={35} />
         </TouchableOpacity>
+        <Text style={{ ...styles.name, top: top + 40 }}>
+          {name + '\n'}#{id}
+        </Text>
+        <Image
+          source={require('../../src/assets/pokebola-blanca.png')}
+          style={{ ...styles.pokebola }}
+        />
+        <FadeInImage uri={picture} style={{ ...styles.pokemonImage }} />
       </View>
     </View>
   );
@@ -41,5 +53,23 @@ const styles = StyleSheet.create({
   backbutton: {
     position: 'absolute',
     left: 20,
+  },
+  name: {
+    color: 'white',
+    fontSize: 40,
+    alignSelf: 'flex-start',
+    left: 20,
+  },
+  pokebola: {
+    width: 250,
+    height: 250,
+    top: 10,
+    opacity: 0.7,
+  },
+  pokemonImage: {
+    width: 250,
+    height: 250,
+    position: 'absolute',
+    bottom: -15,
   },
 });
