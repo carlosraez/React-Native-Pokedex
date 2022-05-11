@@ -24,7 +24,6 @@ export const PokemonScreen = ({ navigation, route }: Props) => {
   const { name, id, picture } = simplePokemon;
   const { top } = useSafeAreaInsets();
   const { isLoading, pokemon } = usePokemon(id);
-  console.log(pokemon);
 
   return (
     <View style={{ flex: 1 }}>
